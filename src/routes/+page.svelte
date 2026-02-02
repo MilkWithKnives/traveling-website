@@ -128,6 +128,16 @@
   ];
 
   let isLight = false;
+  let track: HTMLDivElement | null = null;
+
+  const scrollToSection = (hash: string) => {
+    const id = hash.replace('#', '');
+    const el = document.getElementById(id);
+    if (el && track) {
+      const left = el.offsetLeft - track.offsetLeft;
+      track.scrollTo({ left, behavior: 'smooth' });
+    }
+  };
 
   const setTheme = (mode: 'light' | 'dark') => {
     isLight = mode === 'light';
@@ -145,6 +155,21 @@
   onMount(() => {
     const saved = localStorage.getItem('theme');
     setTheme(saved === 'light' ? 'light' : 'dark');
+
+    const onWheel = (event: WheelEvent) => {
+      if (!track) return;
+      const horizontal = Math.abs(event.deltaX) >= Math.abs(event.deltaY);
+      if (!horizontal) {
+        event.preventDefault();
+        track.scrollLeft += event.deltaY;
+      }
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+    };
   });
 </script>
 
@@ -161,7 +186,13 @@
     <div class="logo">Full Scope Media</div>
     <nav>
       {#each navLinks as link}
-        <a href={link.href}>{link.label}</a>
+        <a
+          href={link.href}
+          on:click|preventDefault={() => {
+            scrollToSection(link.href);
+          }}
+          >{link.label}</a
+        >
       {/each}
     </nav>
     <div class="theme-toggle">
@@ -180,11 +211,17 @@
           </svg>
         </span>
       </label>
-      <a class="cta" href="#contact">Book</a>
+      <a
+        class="cta"
+        href="#contact"
+        on:click|preventDefault={() => {
+          scrollToSection('#contact');
+        }}>Book</a
+      >
     </div>
   </header>
 
-  <div class="scroll-track">
+  <div class="scroll-track" bind:this={track}>
     <section class="hero panel">
     <div class="hero__text">
       <p class="eyebrow">Ryan Champion · Full Scope Media LLC · Road desk USA</p>
@@ -397,6 +434,7 @@
     --bg: #0e0f13;
     --page-bg: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 35%),
       radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.08), transparent 30%), #0e0f13;
+    --nav-height: 72px;
     --text: #f6f6f6;
     --subtext: #cfd0d6;
     --muted: #9aa0ad;
@@ -437,6 +475,7 @@
     background: var(--page-bg);
     color: var(--text);
     transition: background 0.45s ease, color 0.45s ease;
+    overflow: hidden;
   }
 
   :global(html) {
@@ -457,49 +496,40 @@
   }
 
   .page {
-    min-height: 100vh;
-    padding: 32px clamp(20px, 4vw, 72px) 64px;
+    height: 100vh;
+    padding: 16px clamp(14px, 4vw, 56px) 16px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 12px;
+    overflow: hidden;
   }
 
   .scroll-track {
-    display: grid;
-    grid-auto-flow: row;
-    grid-auto-rows: auto;
-    gap: 96px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 56px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 8px 0 12px;
+    overscroll-behavior-x: contain;
   }
 
   .panel {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    width: 100%;
+    flex: 0 0 min(90vw, 1100px);
+    width: min(90vw, 1100px);
+    min-height: calc(100vh - var(--nav-height) - 40px);
+    overflow: hidden;
+    padding-bottom: 12px;
   }
 
-  @media (min-width: 900px) {
-    .scroll-track {
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(92vw, 1100px);
-      overflow-x: auto;
-      padding-bottom: 12px;
-      gap: 72px;
-      scroll-snap-type: x mandatory;
-      overscroll-behavior-x: contain;
-    }
+  .scroll-track::-webkit-scrollbar {
+    height: 10px;
+  }
 
-    .scroll-track::-webkit-scrollbar {
-      height: 10px;
-    }
-
-    .scroll-track::-webkit-scrollbar-thumb {
-      background: color-mix(in srgb, var(--border) 100%, transparent);
-      border-radius: 999px;
-    }
-
-    .panel {
-      width: min(92vw, 1100px);
-    }
+  .scroll-track::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--border) 100%, transparent);
+    border-radius: 999px;
   }
 
   .nav {
@@ -658,6 +688,7 @@
     gap: 32px;
     align-items: center;
     animation: floatUp 0.9s ease 0.05s both;
+    min-height: calc(100vh - var(--nav-height) - 120px);
   }
 
   .hero__text h1 {
