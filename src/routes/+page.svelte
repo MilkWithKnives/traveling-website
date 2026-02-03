@@ -516,11 +516,15 @@
   }
 
   .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     flex: 0 0 min(90vw, 1100px);
     width: min(90vw, 1100px);
-    min-height: calc(100vh - var(--nav-height) - 40px);
+    min-height: calc(100vh - var(--nav-height));
     overflow: hidden;
-    padding-bottom: 12px;
+    padding: 8px 12px 16px;
+    box-sizing: border-box;
   }
 
   .scroll-track::-webkit-scrollbar {
@@ -685,10 +689,10 @@
   .hero {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 32px;
-    align-items: center;
+    gap: 24px;
+    align-items: start;
     animation: floatUp 0.9s ease 0.05s both;
-    min-height: calc(100vh - var(--nav-height) - 120px);
+    min-height: 100%;
   }
 
   .hero__text h1 {
@@ -706,7 +710,7 @@
   .hero__actions {
     display: flex;
     gap: 12px;
-    margin: 20px 0;
+    margin: 16px 0;
   }
 
   .hero__meta {
