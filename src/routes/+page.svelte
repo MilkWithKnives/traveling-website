@@ -189,6 +189,23 @@
       <div class="section-inner">
         <p class="eyebrow">Contact</p>
         <h2>Book a shoot</h2>
+        <p class="hint">Share your info and I’ll reply within 24 hours.</p>
+      </div>
+      <div class="contact-form-shell">
+        <form class="stackedForm">
+          <ul class="wrapper">
+            <li style="--i:4;">
+              <input required placeholder="Name" type="text" class="input" />
+            </li>
+            <li style="--i:3;">
+              <input name="phone" required placeholder="Phone number" class="input" />
+            </li>
+            <li style="--i:2;">
+              <input name="email" required placeholder="E-mail" type="email" class="input" />
+            </li>
+            <button type="button" style="--i:1;"><span>Submit</span></button>
+          </ul>
+        </form>
       </div>
     </div>
   </section>
@@ -289,8 +306,8 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+    min-height: 0;
   }
 
   .hero-grid {
@@ -300,6 +317,7 @@
     gap: 28px;
     align-items: start;
     min-height: 0;
+    width: 100%;
   }
 
   .hero-col {
@@ -321,6 +339,7 @@
     display: flex;
     gap: 12px;
     margin: 16px 0;
+    flex-wrap: wrap;
   }
 
   .meta-line {
@@ -332,19 +351,22 @@
     display: grid;
     grid-template-rows: 1fr 1.1fr;
     gap: 18px;
+    min-height: 0;
   }
 
   .card {
     border-radius: 22px;
     padding: 18px;
     color: #fff;
-    box-shadow: var(--shadow);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
     position: relative;
     min-height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
+    min-width: 0;
+    backdrop-filter: blur(6px);
   }
 
   .card.tall {
@@ -353,6 +375,7 @@
 
   .card.wide {
     min-height: 260px;
+    width: 100%;
   }
 
   .card.blue {
@@ -386,12 +409,14 @@
     display: grid;
     gap: 14px;
     align-content: start;
+    min-height: 0;
   }
 
   .selected-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(140px, 1fr));
     gap: 14px;
+    min-width: 0;
   }
 
   .eyebrow {
@@ -413,8 +438,174 @@
 
   .section-inner {
     max-width: 720px;
+    width: min(720px, 100%);
   }
 
+  .contact-form-shell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .stackedForm {
+    --form-btn-color-3: linear-gradient(160deg, #9bffd5, #4ac4ff);
+    --form-btn-color-2: linear-gradient(160deg, #22d3ee, #6366f1);
+    --form-btn-color-1: linear-gradient(160deg, #f97316, #f59e0b);
+    --form-btn-base: #111827;
+    --form-btn-active-color: #4ac4ff;
+    --form-text: #0c111a;
+    --form-rotation: rotate3d(0, 1, 0, 180deg);
+    --form-text-padding-left: 12px;
+    transform: var(--form-rotation);
+  }
+
+  .stackedForm .input,
+  .stackedForm button {
+    width: 240px;
+    height: 44px;
+    position: relative;
+    padding: 10px;
+    border: 0.1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: var(--form-text);
+    font-weight: 600;
+  }
+
+  .stackedForm button {
+    background: #0c111a;
+    border: none;
+    color: #f6f6f6;
+  }
+
+  .stackedForm button span {
+    display: block;
+    transform: var(--form-rotation);
+  }
+
+  .stackedForm .wrapper {
+    position: relative;
+    transform: skew(-14deg, -4deg);
+    display: grid;
+    gap: 12px;
+  }
+
+  .stackedForm .wrapper li,
+  .stackedForm button {
+    position: relative;
+    list-style: none;
+    width: 240px;
+    z-index: var(--i);
+    transition: 0.35s ease;
+    color: white;
+  }
+
+  .stackedForm .wrapper li::before,
+  .stackedForm button::before {
+    position: absolute;
+    content: '';
+    background: #0c111a;
+    top: 0;
+    left: -36px;
+    width: 36px;
+    height: 44px;
+    transform-origin: right;
+    transform: skewY(45deg);
+    transition: 0.3s;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .stackedForm .wrapper li::after,
+  .stackedForm button::after {
+    position: absolute;
+    content: '';
+    background: #0c111a;
+    width: 240px;
+    height: 36px;
+    top: -36px;
+    left: 0;
+    transform-origin: bottom;
+    transform: skewX(45deg);
+    transition: 0.3s;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .stackedForm .wrapper li:nth-child(1)::after,
+  .stackedForm .wrapper li:nth-child(1)::before {
+    background-image: var(--form-btn-color-3);
+  }
+
+  .stackedForm .wrapper li:nth-child(2)::after,
+  .stackedForm .wrapper li:nth-child(2)::before {
+    background-image: var(--form-btn-color-2);
+  }
+
+  .stackedForm .wrapper li:nth-child(3)::after,
+  .stackedForm .wrapper li:nth-child(3)::before {
+    background-image: var(--form-btn-color-1);
+  }
+
+  .stackedForm li .input {
+    outline: none;
+    border: none;
+    padding: 0;
+    padding-left: var(--form-text-padding-left);
+    width: 100%;
+    transform: var(--form-rotation);
+    color: #0c111a;
+    font-weight: 600;
+  }
+
+  .stackedForm li .input::placeholder {
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  .stackedForm li:nth-child(1) .input {
+    background-image: var(--form-btn-color-3);
+  }
+
+  .stackedForm li:nth-child(2) .input {
+    background-image: var(--form-btn-color-2);
+  }
+
+  .stackedForm li:nth-child(3) .input {
+    background-image: var(--form-btn-color-1);
+  }
+
+  .stackedForm .wrapper li:hover,
+  .stackedForm button:hover,
+  .stackedForm button:focus {
+    transform: translateX(-20px) skew(-14deg, -4deg);
+  }
+
+  .stackedForm button:hover,
+  .stackedForm button:hover::before,
+  .stackedForm button:hover::after,
+  .stackedForm button:focus,
+  .stackedForm button:focus::before,
+  .stackedForm button:focus::after {
+    background: var(--form-btn-active-color);
+  }
+
+  .stackedForm button:active {
+    transform: translateX(0px) skew(-14deg, -4deg);
+  }
+
+  @media (max-width: 640px) {
+    .stackedForm .input,
+    .stackedForm button,
+    .stackedForm .wrapper li,
+    .stackedForm button::after {
+      width: 200px;
+    }
+    .stackedForm .wrapper li::before {
+      left: -32px;
+      width: 32px;
+    }
+    .stackedForm {
+      transform: rotate3d(0, 1, 0, 180deg) scale(0.95);
+    }
+  }
   /* Testimonials rail */
   .testimonials {
     background: #0a0a0a;
@@ -428,6 +619,7 @@
   .scroll-container {
     overflow: hidden;
     margin: 0 -24px;
+    min-width: 0;
   }
 
   .testimonials-track {
@@ -438,6 +630,7 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     align-items: flex-start;
+    min-width: 0;
   }
 
   .testimonial-card {
@@ -508,6 +701,31 @@
     .testimonials-track {
       padding: 0 16px 20px;
       gap: 16px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .h-section {
+      padding: calc(var(--nav-h) + 8px) 16px 16px;
+    }
+    .hero-grid {
+      gap: 20px;
+    }
+    .hero-actions {
+      width: 100%;
+    }
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .card {
+      padding: 16px;
+    }
+    .card-title {
+      font-size: 18px;
+    }
+    .card-meta {
+      font-size: 13px;
     }
   }
 </style>

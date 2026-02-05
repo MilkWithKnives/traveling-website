@@ -15,24 +15,15 @@
   scrollerHandle.set({ scrollToIndex });
   setContext('scroller-handle', { scrollToIndex });
 
-  const isVertScrollable = (el: EventTarget | null, dy: number) => {
-    let node = el as HTMLElement | null;
-    while (node && node !== rail) {
-      const canScroll = node.scrollHeight > node.clientHeight;
-      if (canScroll) {
-        if (dy < 0 && node.scrollTop > 0) return true;
-        if (dy > 0 && node.scrollTop + node.clientHeight < node.scrollHeight) return true;
-      }
-      node = node.parentElement;
-    }
-    return false;
-  };
-
   const wheelHandler = (e: WheelEvent) => {
     if (!rail) return;
-    if (isVertScrollable(e.target, e.deltaY)) return;
+    const { deltaX, deltaY } = e;
+    const primary = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : deltaY;
     e.preventDefault();
-    rail.scrollLeft += e.deltaY;
+    const factor = 1.25;
+    const next = rail.scrollLeft + primary * factor;
+    const max = rail.scrollWidth - rail.clientWidth;
+    rail.scrollLeft = Math.min(Math.max(0, next), max);
   };
 
   const keyHandler = (e: KeyboardEvent) => {
@@ -106,6 +97,7 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
   }
 
   :global(.h-section) {
