@@ -1,0 +1,81 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 4304 >>
+stream
+BT /F2 18 Tf 1 0 0 1 48 760 Tm (Travelingwebsite App Summary) Tj ET
+BT /F1 9 Tf 1 0 0 1 48 738 Tm (Repository snapshot summary generated 2026-02-06) Tj ET
+BT /F2 12 Tf 1 0 0 1 48 722 Tm (What it is) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 708 Tm (A SvelteKit web app that presents a horizontally scrolling, section-based portfolio) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 696 Tm (experience branded as Full Scope Media.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 684 Tm (The repository is also configured as a packageable Svelte library, but the primary user-) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 672 Tm (facing artifact here is the root route showcase page.) Tj ET
+BT /F2 12 Tf 1 0 0 1 48 654 Tm (Who it's for) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 640 Tm (- Primary persona appears to be a traveling photographer or small creative studio) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 628 Tm (  owner \(Ryan Champion / Full Scope Media\) who needs a visual portfolio and booking-) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 616 Tm (  oriented landing page.) Tj ET
+BT /F2 12 Tf 1 0 0 1 48 598 Tm (What it does) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 584 Tm (- Renders a full-viewport horizontal rail of sections \(hero, work, journal, services,) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 572 Tm (  schedule, testimonials, about, contact\).) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 560 Tm (- Uses a fixed top navigation bar with section buttons that programmatically jump to) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 548 Tm (  section indices.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 536 Tm (- Presents static content blocks for travel chapters and client testimonials with) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 524 Tm (  responsive card layouts.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 512 Tm (- Implements custom wheel-to-horizontal scrolling behavior for desktop navigation.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 500 Tm (- Supports keyboard navigation \(Arrow keys, PageUp/PageDown, Home/End\) across) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 488 Tm (  sections.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 476 Tm (- Includes a styled contact form UI shell \(name, phone, email\) with no submit handler) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 464 Tm (  connected to backend routes.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 452 Tm (- Uses reduced-motion preference checks and scroll snapping for smoother, accessible) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 440 Tm (  navigation behavior.) Tj ET
+BT /F2 12 Tf 1 0 0 1 48 422 Tm (How it works \(repo evidence only\)) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 408 Tm (- Route composition: `src/routes/+page.svelte` defines page sections and static arrays) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 396 Tm (  \(`navLinks`, `cards`, `testimonials`\) and nests everything inside) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 384 Tm (  `HorizontalScroller`.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 372 Tm (- Component behavior: `src/lib/components/HorizontalScroller.svelte` owns the rail,) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 360 Tm (  maps wheel and keyboard events to horizontal movement, and uses) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 348 Tm (  `IntersectionObserver` to track the visible section.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 336 Tm (- State/data flow: `src/lib/stores/scroller.ts` exposes `scrollerHandle` and) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 324 Tm (  `activeIndex`; the page reads `scrollerHandle` to call `scrollToIndex` when nav) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 312 Tm (  buttons are clicked.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 300 Tm (- Styling stack: global Tailwind import plus custom CSS variables in `src/app.css`;) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 288 Tm (  route-level styles in `src/routes/+page.svelte`.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 276 Tm (- Server/data layer: Drizzle + Postgres setup exists in `src/lib/server/db/index.ts`) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 264 Tm (  and `src/lib/server/db/schema.ts`, but no API routes or UI wiring to that DB were) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 252 Tm (  found in this repo.) Tj ET
+BT /F2 12 Tf 1 0 0 1 48 234 Tm (How to run \(minimal\)) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 220 Tm (- Install dependencies: `npm install`.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 208 Tm (- Start local dev server: `npm run dev -- --open`.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 196 Tm (- Optional quality check: `npm run check`.) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 184 Tm (- Node version requirement: Not found in repo. Production deploy URL/instructions: Not) Tj ET
+BT /F1 10 Tf 1 0 0 1 48 172 Tm (  found in repo.) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+4752
+%%EOF
